@@ -1,8 +1,6 @@
 import random
 import levels
-import os
 
-clear = lambda: os.system('cls')
 
 stage = 0
 row = 0
@@ -18,7 +16,6 @@ while stage + 1 <= levels.levels:
     inside = 1
 
     while inside == 1:
-        clear()
         x = ((genrow - 1) * width + gencolumn) * 4
         y = x - 4
         room = level[y:x]
