@@ -6,49 +6,49 @@ stage = 0
 row = 0
 column = 0
 
-while stage + 1 <= levels.levels:
+while stage + 1 <= len(levels.level):
     level = levels.level[stage]
-
     genrow = level[-1]
     gencolumn = level[-2]
-    heigh = level[-3]
+    height = level[-3]
     width = level[-4]
-    inside = 1
+    inside = True
+    print('This level is ', height, ' x ', width)
 
-    while inside == 1:
-        x = ((genrow - 1) * width + gencolumn) * 4
+    while inside:
+        x = ((genrow - 1) * width + gencolumn) * 4  # some weird math, don't ask me
         y = x - 4
         room = level[y:x]
 
-        print('You are currently in: row ', genrow, ' and column ', gencolumn)
-        direct = ['-', '-', '-', '-']
+        print('You are currently in: row ', genrow, ' and column ', gencolumn)   # uhh.. basically all of the UI
+        directions = ['-', '-', '-', '-']
         wr = 0
         for i in room:
             if room[wr] > 0:
-                direct[wr] = str(wr + 1)
-            wr = wr + 1
-        print('----[', direct[0], ']----')
-        print('[', direct[3], ']-----[', direct[1], ']')
-        print('----[', direct[2], ']----')
+                directions[wr] = str(wr + 1)
+            wr += 1
+        print('----[', directions[0], ']----')
+        print('[', directions[3], ']-----[', directions[1], ']')
+        print('----[', directions[2], ']----')
 
-        c = int(input())
-        c = c - 1
+        c = int(input()) - 1
+        action = room[c]
 
-        if room[c] == 0:
+        if action == 0:
             print('Ooops... You can\'t go here')
-        elif room[c] == 1:
+        elif action == 1:
             if c == 0:
-                genrow = genrow - 1
+                genrow -= 1
             elif c == 1:
-                gencolumn = gencolumn + 1
+                gencolumn += 1
             elif c == 2:
-                genrow = genrow + 1
+                genrow += 1
             elif c == 3:
-                gencolumn = gencolumn - 1
-        elif room[c] == 2:
-            genrow = random.randint(1, heigh)
+                gencolumn -= 1
+        elif action == 2:
+            genrow = random.randint(1, height)
             gencolumn = random.randint(1, width)
-        elif room[c] == 3:
+        elif action == 3:
             print('You escaped! Now come back to your boring life...')
-            stage = stage + 1
-            inside = 0
+            stage += 1
+            inside = False
